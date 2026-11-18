@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.2.2 — 2026-11-18
+## 0.2.2 (2026-11-18)
 
 First public release.
 
@@ -17,7 +17,7 @@ First public release.
 - Forced mode kept as a fallback (`Modo=forcado`): graded NPC_FakeSense events with distance/vent-aware certainty.
 - Test hotkeys (F7/F8), English log messages, Linux and Windows installers.
 
-## 0.1 — 2026-11-17 (unreleased)
+## 0.1 (2026-11-17, unreleased)
 
 - Prototype: forced NPC_FakeSense events with certainty computed from distance and loudness, hooked on
   START_NEXT_FRAME.

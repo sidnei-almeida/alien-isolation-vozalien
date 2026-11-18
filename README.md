@@ -1,12 +1,12 @@
 <p align="center">
-  <img src="assets/banner.jpg" alt="Alien: Isolation — Voice Detection Mod" width="100%">
+  <img src="assets/banner.jpg" alt="Alien: Isolation Voice Detection Mod" width="100%">
 </p>
 
 <h1 align="center">VozAlien</h1>
 
 <p align="center">
   <b>Voice detection for Alien: Isolation.</b><br>
-  The Xenomorph hears you through your microphone — using the game's own hearing system.
+  The Xenomorph hears you through your microphone, using the game's own hearing system.
 </p>
 
 <p align="center">
@@ -23,14 +23,14 @@
 
 Whisper and the Alien won't notice you from the other side of the room. Talk at a normal volume a few metres
 away and it comes to check. Keep talking and it narrows you down. Shout while it crawls through the vents and
-it drops into your area — without knowing exactly where you are.
+it drops into your area, without knowing exactly where you are.
 
 **VozAlien turns your real voice into an in-game noise**, exactly like footsteps or the motion tracker's beep.
 It never tells the Alien where you are: it makes a sound, and the game's own AI decides what the Alien heard
 and what to do about it.
 
 > In testing (Mission 5, *The Quarantine*): a single "buddy" at normal volume with the Alien about 9 m away made
-> it come and search the spot where I was hiding. It didn't find me — until I stepped into it.
+> it come and search the spot where I was hiding. It didn't find me. Then I stepped right into it.
 
 ## Contents
 
@@ -49,13 +49,13 @@ and what to do about it.
 ## Highlights
 
 - **Native, not forced.** Your voice is posted as a regular *movement noise* stimulus. The game computes who
-  hears it — no hard-coded "the Alien now knows where you are".
+  hears it. Nothing tells the Alien where you are.
 - **Distance is real.** Hearing uses the walkable path length, so walls and corridors matter. Vents halve the
   range, as they do for every other sound in the game.
 - **It builds up.** One word far away barely registers. Sustained talking keeps filling the Alien's hearing meter
   until it crosses the threshold that makes it investigate, search or attack.
 - **Uncertain at a distance.** When the Alien is far (or in a vent), the noise comes from a nearby spot you walked
-  through recently, so it heads for your *area*. Up close, it hears exactly where you are — like the tracker.
+  through recently, so it heads for your *area*. Up close, it hears exactly where you are, like the motion tracker.
 - **The AI stays free.** Killtraps from the vents, ambushes, breakouts, retreats: all still decided by the game.
 - **Everyone can hear you.** Androids and hostile humans react to your voice too, just like to your footsteps.
 - **Robust microphone handling.** Room-noise calibration, adaptive noise floor, mute detection with automatic
@@ -66,28 +66,22 @@ and what to do about it.
 
 ## How it works
 
-```mermaid
-flowchart LR
-    MIC["🎙️ Microphone"] -->|"dB above room noise"| VA["VozAlien"]
-    VA -->|"movement noise every 250 ms<br/>loudness 0–1"| SM["Game StimulusManager"]
-    SM --> AL["Alien hearing<br/>path distance · vents ×2 · 50 m"]
-    SM --> NPC["Androids / humans"]
-    AL --> MT["Hearing meter<br/>TRACE → LOWER → ACTIVATED → UPPER"]
-    MT --> BT["Behaviour tree<br/>investigate · sweep vents · killtrap · break out · attack"]
-```
+<p align="center">
+  <img src="assets/how-it-works.svg" alt="How VozAlien works: microphone, VozAlien, game StimulusManager, Alien hearing, hearing meter, behaviour tree" width="100%">
+</p>
 
 1. **Microphone.** VozAlien measures your room noise during the first 3 seconds, then detects speech as sound that
    rises clearly above it. Short clicks and taps are ignored.
-2. **Loudness.** Speech level is mapped onto the game's own loudness scale — every +6 dB doubles the reach, like
+2. **Loudness.** Speech level is mapped onto the game's own loudness scale. Every +6 dB doubles the reach, as with
    real sound:
 
    | Your voice (dB above room noise) | In-game loudness | Comparable to | Reach (through vents) |
    |---|---|---|---|
-   | ~8 dB — whisper | 0.07 | — | ~4 m (~2 m) |
-   | ~14 dB — quiet talk | 0.15 | slow footsteps | ~8 m (~4 m) |
-   | ~20 dB — normal talk | 0.30 | walking | ~15 m (~7 m) |
-   | ~26 dB — loud talk | 0.60 | running | ~30 m (~15 m) |
-   | 32 dB+ — shout | 1.00 | motion tracker beep | ~50 m (~25 m) |
+   | ~8 dB, whisper | 0.07 | | ~4 m (~2 m) |
+   | ~14 dB, quiet talk | 0.15 | slow footsteps | ~8 m (~4 m) |
+   | ~20 dB, normal talk | 0.30 | walking | ~15 m (~7 m) |
+   | ~26 dB, loud talk | 0.60 | running | ~30 m (~15 m) |
+   | 32 dB+, shout | 1.00 | motion tracker beep | ~50 m (~25 m) |
 
    *dB values depend on your mic and room; a close condenser mic in a quiet room reads higher. See
    [Configuration](#configuration).*
@@ -111,8 +105,8 @@ implementation (no AIVR code) built around a different idea: **make a sound, don
 | What reaches the game | A forced `NPC_FakeSense` event injected straight into the Alien's perception | A regular movement-noise stimulus, like footsteps |
 | Certainty | Always **UPPER** (maximum) | Whatever the game's hearing model produces |
 | Position given to the Alien | Your exact position, every time | Exact when close; a nearby spot you walked through when far |
-| Distance | Ignored — heard anywhere on the map | Walkable path distance, 50 m hearing range |
-| Loudness | Ignored — a whisper equals a scream | Mapped to the game's loudness scale (6 dB per doubling) |
+| Distance | Ignored: heard anywhere on the map | Walkable path distance, 50 m hearing range |
+| Loudness | Ignored: a whisper equals a scream | Mapped to the game's loudness scale (6 dB per doubling) |
 | Vents | No difference | Half range, backstage behaviours decide |
 | Talking longer | Same event again (with cooldown) | Fills the hearing meter progressively |
 | Other NPCs | Only the Alien | Androids and humans hear you too |
@@ -120,11 +114,11 @@ implementation (no AIVR code) built around a different idea: **make a sound, don
 
 ## Requirements
 
-- **Alien: Isolation — Steam version.** Other builds (Epic, GOG, Microsoft Store) have different code; VozAlien
+- **Alien: Isolation, Steam version.** Other builds (Epic, GOG, Microsoft Store) have different code; VozAlien
   detects that and stays disabled.
 - **Windows**, or **Linux with Steam + Proton**.
 - A **microphone** (the system default input is used unless you pick another one in the ini).
-- An **ASI loader** — [Ultimate ASI Loader](https://github.com/ThirteenAG/Ultimate-ASI-Loader). If you already use
+- An **ASI loader**: [Ultimate ASI Loader](https://github.com/ThirteenAG/Ultimate-ASI-Loader). If you already use
   mods such as Alias Isolation or MouseFix you probably have it; otherwise the installers add it.
 
 ## Installation
@@ -171,7 +165,7 @@ apps access your microphone*.
 
 ## First launch
 
-- **Stay quiet for ~3 seconds when the game window opens** — that's when the room noise is measured.
+- **Stay quiet for ~3 seconds when the game window opens.** That's when the room noise is measured.
 - Check `VozAlien.log` next to `AI.exe`. A healthy start looks like:
 
   ```
@@ -220,7 +214,7 @@ Or simply delete `VozAlien.asi` from the game folder. The ASI loader is left in 
 
 | Symptom | Cause / fix |
 |---|---|
-| Log says `room noise -140.0 dBFS` | The microphone sends digital silence: hardware mute button, gain at zero, or wrong default input. Fix it and restart the game (or just unmute — VozAlien recalibrates when sound comes back). |
+| Log says `room noise -140.0 dBFS` | The microphone sends digital silence: hardware mute button, gain at zero, or wrong default input. Fix it and restart the game (or just unmute it: VozAlien recalibrates when sound comes back). |
 | No `VozAlien.log` at all | The ASI loader isn't loading. On Proton check the `WINEDLLOVERRIDES` launch option. |
 | `ERROR: AI.exe is not the expected build` | Not the Steam build (or the game was updated). The mod stays off by design. |
 | `ERROR: ... already redirected by another mod` | Another mod hooks the same call. Please open an issue with the mod's name. |
@@ -242,9 +236,9 @@ On Windows, use an MSYS2 **MINGW32** shell (`pacman -S mingw-w64-i686-gcc`) and 
 
 ## Credits
 
-- **InuraFRA** — AlienIsolationVoiceRestore, the original idea of a microphone-aware Alien on PC.
-- **ThirteenAG** — [Ultimate ASI Loader](https://github.com/ThirteenAG/Ultimate-ASI-Loader) (MIT), downloaded by the installers when needed.
-- **Creative Assembly** — for shipping the Alien's behaviour trees in readable form with the game.
+- **InuraFRA**: AlienIsolationVoiceRestore, the original idea of a microphone-aware Alien on PC.
+- **ThirteenAG**: [Ultimate ASI Loader](https://github.com/ThirteenAG/Ultimate-ASI-Loader) (MIT), downloaded by the installers when needed.
+- **Creative Assembly**, for shipping the Alien's behaviour trees in readable form with the game.
 
 ## Disclaimer
 

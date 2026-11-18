@@ -1,12 +1,12 @@
 <p align="center">
-  <img src="assets/banner.jpg" alt="Alien: Isolation — Voice Detection Mod" width="100%">
+  <img src="assets/banner.jpg" alt="Alien: Isolation Voice Detection Mod" width="100%">
 </p>
 
 <h1 align="center">VozAlien</h1>
 
 <p align="center">
   <b>Detecção de voz para Alien: Isolation.</b><br>
-  O Xenomorfo te ouve pelo microfone — usando o próprio sistema de audição do jogo.
+  O Xenomorfo te ouve pelo microfone, usando o próprio sistema de audição do jogo.
 </p>
 
 <p align="center">
@@ -22,7 +22,7 @@
 ---
 
 Sussurre e o Alien não te nota do outro lado da sala. Fale normal a poucos metros e ele vem conferir. Continue
-falando e ele vai fechando o cerco. Grite com ele rastejando nos dutos e ele desce na sua área — sem saber
+falando e ele vai fechando o cerco. Grite com ele rastejando nos dutos e ele desce na sua área, sem saber
 exatamente onde você está.
 
 **O VozAlien transforma a sua voz de verdade em um barulho dentro do jogo**, igual a passos ou ao bip do
@@ -30,7 +30,7 @@ rastreador. Ele nunca conta pro Alien onde você está: ele faz um som, e a pró
 ouviu e o que fazer com isso.
 
 > No teste (Missão 5, *The Quarantine*): um "buddy" em volume normal, com o Alien a uns 9 m, fez ele vir procurar
-> no lugar onde eu estava escondido. Ele não me achou — até eu esbarrar nele.
+> no lugar onde eu estava escondido. Ele não me achou. Aí eu esbarrei nele.
 
 ## Sumário
 
@@ -48,14 +48,14 @@ ouviu e o que fazer com isso.
 
 ## Destaques
 
-- **Nativo, não forçado.** A voz entra como um *barulho de movimento* comum. O jogo calcula quem ouve — nada de
-  "agora o Alien sabe onde você está".
+- **Nativo, não forçado.** A voz entra como um *barulho de movimento* comum. O jogo calcula quem ouve. Nada diz
+  ao Alien onde você está.
 - **A distância é real.** A audição usa o comprimento do caminho andável, então paredes e corredores contam.
   Dutos cortam o alcance pela metade, como acontece com qualquer outro som do jogo.
 - **Vai acumulando.** Uma palavra solta longe quase não conta. Falar sem parar vai enchendo o medidor de audição
   do Alien até ele passar do ponto de investigar, procurar ou atacar.
 - **Impreciso de longe.** Com o Alien longe (ou no duto), o barulho sai de um lugar por onde você passou há pouco,
-  e ele vai pra sua *área*. De perto, ele ouve exatamente onde você está — como com o rastreador.
+  e ele vai pra sua *área*. De perto, ele ouve exatamente onde você está, como com o rastreador.
 - **A IA continua livre.** Armadilha com a baba no duto, emboscada, descer do duto, recuar: tudo decidido pelo jogo.
 - **Todo mundo ouve.** Androides e humanos hostis também reagem à sua voz, como reagem aos seus passos.
 - **Microfone tratado com cuidado.** Calibração do ruído do quarto, ruído de fundo adaptativo, detecção de
@@ -66,28 +66,22 @@ ouviu e o que fazer com isso.
 
 ## Como funciona
 
-```mermaid
-flowchart LR
-    MIC["🎙️ Microfone"] -->|"dB acima do ruído do quarto"| VA["VozAlien"]
-    VA -->|"barulho de movimento a cada 250 ms<br/>volume 0–1"| SM["StimulusManager do jogo"]
-    SM --> AL["Audição do Alien<br/>distância pelo caminho · dutos ×2 · 50 m"]
-    SM --> NPC["Androides / humanos"]
-    AL --> MT["Medidor de audição<br/>TRACE → LOWER → ACTIVATED → UPPER"]
-    MT --> BT["Árvore de comportamento<br/>investigar · varrer dutos · armadilha · descer · atacar"]
-```
+<p align="center">
+  <img src="assets/how-it-works.pt-BR.svg" alt="Como o VozAlien funciona: microfone, VozAlien, StimulusManager do jogo, audição do Alien, medidor, árvore de comportamento" width="100%">
+</p>
 
 1. **Microfone.** O VozAlien mede o ruído do seu quarto nos primeiros 3 segundos e depois detecta fala como o som
    que sobe bem acima disso. Cliques e batidinhas curtas são ignorados.
-2. **Volume.** O nível da fala é convertido para a régua de volume do próprio jogo — cada +6 dB dobra o alcance,
-   como o som de verdade:
+2. **Volume.** O nível da fala é convertido para a régua de volume do próprio jogo. Cada +6 dB dobra o alcance,
+   como acontece com o som de verdade:
 
    | Sua voz (dB acima do ruído do quarto) | Volume no jogo | Parecido com | Alcance (pelo duto) |
    |---|---|---|---|
-   | ~8 dB — sussurro | 0,07 | — | ~4 m (~2 m) |
-   | ~14 dB — fala baixa | 0,15 | passos devagar | ~8 m (~4 m) |
-   | ~20 dB — fala normal | 0,30 | andando | ~15 m (~7 m) |
-   | ~26 dB — falando alto | 0,60 | correndo | ~30 m (~15 m) |
-   | 32 dB+ — grito | 1,00 | bip do rastreador | ~50 m (~25 m) |
+   | ~8 dB, sussurro | 0,07 | | ~4 m (~2 m) |
+   | ~14 dB, fala baixa | 0,15 | passos devagar | ~8 m (~4 m) |
+   | ~20 dB, fala normal | 0,30 | andando | ~15 m (~7 m) |
+   | ~26 dB, falando alto | 0,60 | correndo | ~30 m (~15 m) |
+   | 32 dB+, grito | 1,00 | bip do rastreador | ~50 m (~25 m) |
 
    *Os dB dependem do microfone e do quarto; um condensador perto da boca num quarto silencioso marca mais alto.
    Veja [Configuração](#configuração).*
@@ -111,8 +105,8 @@ com outra ideia central: **fazer um som, não entregar a posição do jogador.**
 | O que chega no jogo | Um evento `NPC_FakeSense` forçado, direto na percepção do Alien | Um estímulo de barulho comum, como passos |
 | Certeza | Sempre **UPPER** (máxima) | O que o modelo de audição do jogo produzir |
 | Posição entregue ao Alien | A sua posição exata, sempre | Exata de perto; um lugar por onde você passou, de longe |
-| Distância | Ignorada — ouve de qualquer lugar do mapa | Distância pelo caminho, alcance de 50 m |
-| Volume | Ignorado — sussurro vale o mesmo que grito | Na régua do jogo (6 dB dobram o alcance) |
+| Distância | Ignorada: ouve de qualquer lugar do mapa | Distância pelo caminho, alcance de 50 m |
+| Volume | Ignorado: sussurro vale o mesmo que grito | Na régua do jogo (6 dB dobram o alcance) |
 | Dutos | Sem diferença | Metade do alcance; comportamentos de duto decidem |
 | Falar por mais tempo | O mesmo evento de novo (com intervalo) | Enche o medidor aos poucos |
 | Outros NPCs | Só o Alien | Androides e humanos também ouvem |
@@ -120,11 +114,11 @@ com outra ideia central: **fazer um som, não entregar a posição do jogador.**
 
 ## Requisitos
 
-- **Alien: Isolation — versão Steam.** Outras versões (Epic, GOG, Microsoft Store) têm código diferente; o VozAlien
+- **Alien: Isolation, versão Steam.** Outras versões (Epic, GOG, Microsoft Store) têm código diferente; o VozAlien
   percebe e fica desligado.
 - **Windows**, ou **Linux com Steam + Proton**.
 - Um **microfone** (usa a entrada padrão do sistema, a não ser que você escolha outra no ini).
-- Um **ASI loader** — [Ultimate ASI Loader](https://github.com/ThirteenAG/Ultimate-ASI-Loader). Se você já usa mods
+- Um **ASI loader**: [Ultimate ASI Loader](https://github.com/ThirteenAG/Ultimate-ASI-Loader). Se você já usa mods
   como Alias Isolation ou MouseFix, provavelmente já tem; senão, os instaladores colocam.
 
 ## Instalação
@@ -172,7 +166,7 @@ segurança → Microfone → Permitir que aplicativos da área de trabalho acess
 
 ## Primeira vez
 
-- **Fique quieto uns 3 segundos quando a janela do jogo abrir** — é quando o ruído do quarto é medido.
+- **Fique quieto uns 3 segundos quando a janela do jogo abrir.** É nessa hora que o ruído do quarto é medido.
 - Confira o `VozAlien.log` ao lado do `AI.exe`. Um começo saudável:
 
   ```
@@ -219,7 +213,7 @@ Ou apague o `VozAlien.asi` da pasta do jogo. O ASI loader fica (outros mods pode
 
 | Sintoma | Causa / solução |
 |---|---|
-| O log diz `room noise -140.0 dBFS` | O microfone está mandando silêncio digital: botão de mudo, ganho no zero ou entrada padrão errada. Corrija e reabra o jogo (ou só desmute — o VozAlien recalibra quando o som volta). |
+| O log diz `room noise -140.0 dBFS` | O microfone está mandando silêncio digital: botão de mudo, ganho no zero ou entrada padrão errada. Corrija e reabra o jogo (ou só desmute: o VozAlien recalibra quando o som volta). |
 | Não aparece `VozAlien.log` | O ASI loader não está carregando. No Proton, confira o `WINEDLLOVERRIDES` nas opções de inicialização. |
 | `ERROR: AI.exe is not the expected build` | Não é a versão Steam (ou o jogo foi atualizado). O mod fica desligado de propósito. |
 | `ERROR: ... already redirected by another mod` | Outro mod usa o mesmo gancho. Abra uma issue com o nome do mod. |
@@ -241,9 +235,9 @@ No Windows, use um shell **MINGW32** do MSYS2 (`pacman -S mingw-w64-i686-gcc`) e
 
 ## Créditos
 
-- **InuraFRA** — AlienIsolationVoiceRestore, a ideia original de um Alien que ouve o microfone no PC.
-- **ThirteenAG** — [Ultimate ASI Loader](https://github.com/ThirteenAG/Ultimate-ASI-Loader) (MIT), baixado pelos instaladores quando necessário.
-- **Creative Assembly** — por distribuir as árvores de comportamento do Alien em formato legível junto com o jogo.
+- **InuraFRA**: AlienIsolationVoiceRestore, a ideia original de um Alien que ouve o microfone no PC.
+- **ThirteenAG**: [Ultimate ASI Loader](https://github.com/ThirteenAG/Ultimate-ASI-Loader) (MIT), baixado pelos instaladores quando necessário.
+- **Creative Assembly**, por distribuir as árvores de comportamento do Alien em formato legível junto com o jogo.
 
 ## Aviso
 

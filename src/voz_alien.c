@@ -1,5 +1,5 @@
 /*
- * VozAlien — voice detection for Alien: Isolation.
+ * VozAlien: voice detection for Alien: Isolation.
  * https://github.com/sidnei-almeida/alien-isolation-vozalien  (MIT License)
  *
  * Written from scratch against the Steam AI.exe (32-bit, sha256 dde66521...).
