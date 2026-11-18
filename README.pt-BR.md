@@ -30,7 +30,7 @@ rastreador. Ele nunca conta pro Alien onde você está: ele faz um som, e a pró
 ouviu e o que fazer com isso.
 
 > No teste (Missão 5, *The Quarantine*): um "buddy" em volume normal, com o Alien a uns 9 m, fez ele vir procurar
-> no lugar onde eu estava escondido. Ele não me achou. Aí eu esbarrei nele.
+> no lugar onde eu estava escondido. Ele não me achou. Aí eu pisei no rabo dele.
 
 ## Sumário
 

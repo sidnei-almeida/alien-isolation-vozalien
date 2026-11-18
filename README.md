@@ -30,7 +30,7 @@ It never tells the Alien where you are: it makes a sound, and the game's own AI 
 and what to do about it.
 
 > In testing (Mission 5, *The Quarantine*): a single "buddy" at normal volume with the Alien about 9 m away made
-> it come and search the spot where I was hiding. It didn't find me. Then I stepped right into it.
+> it come and search the spot where I was hiding. It didn't find me. Then I stepped right on its tail.
 
 ## Contents
 
