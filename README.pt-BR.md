@@ -92,7 +92,7 @@ ouviu e o que fazer com isso.
    HEARD_MOVEMENT, que esvazia com o tempo. Passar de LOWER faz ele ir investigar o barulho; os níveis acima
    escalam. No duto, quem decide são os comportamentos de bastidor (varredura, armadilha, descer).
 
-Detalhes completos, endereços e evidências (em inglês): [docs/REVERSE-ENGINEERING.md](docs/REVERSE-ENGINEERING.md).
+Quer entender a fundo ou contribuir? O guia [Como o Alien: Isolation te ouve](docs/REVERSE-ENGINEERING.pt-BR.md) explica cada sistema do jogo, com endereços e evidências.
 
 ## VozAlien vs. AlienIsolationVoiceRestore
 

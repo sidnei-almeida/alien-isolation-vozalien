@@ -92,7 +92,7 @@ and what to do about it.
    alerted) and added to its HEARD_MOVEMENT meter, which decays over time. Crossing LOWER makes it investigate the
    noise; higher levels escalate. In vents, the backstage behaviours (area sweep, killtrap, breakout) take over.
 
-Full details, addresses and evidence: [docs/REVERSE-ENGINEERING.md](docs/REVERSE-ENGINEERING.md).
+Want the full story, or to contribute? The guide [How Alien: Isolation hears you](docs/REVERSE-ENGINEERING.md) walks through every game system involved, with addresses and evidence.
 
 ## VozAlien vs. AlienIsolationVoiceRestore
 
