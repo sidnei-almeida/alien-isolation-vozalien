@@ -141,7 +141,7 @@ Já tem um `WINEDLLOVERRIDES` (ReShade, ajustes do DXVK…)? Acrescente `d3d11=n
 
 ### Windows (PowerShell)
 
-```powershell
+```
 irm https://raw.githubusercontent.com/sidnei-almeida/alien-isolation-vozalien/main/install.ps1 | iex
 ```
 
@@ -197,14 +197,15 @@ Edite o `VozAlien.ini` ao lado do `AI.exe` (vale a partir da próxima abertura).
 
 ## Desinstalar
 
-```bash
+```
 # Linux
 curl -fsSL https://raw.githubusercontent.com/sidnei-almeida/alien-isolation-vozalien/main/install.sh | bash -s -- --uninstall
 ```
 
-```powershell
-# Windows
-& ([scriptblock]::Create((irm https://raw.githubusercontent.com/sidnei-almeida/alien-isolation-vozalien/main/install.ps1))) -Uninstall
+```
+# Windows (PowerShell)
+$script = irm https://raw.githubusercontent.com/sidnei-almeida/alien-isolation-vozalien/main/install.ps1
+& ([scriptblock]::Create($script)) -Uninstall
 ```
 
 Ou apague o `VozAlien.asi` da pasta do jogo. O ASI loader fica (outros mods podem usar).
