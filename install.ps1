@@ -92,7 +92,7 @@ function Install-VozAlien([string]$GameDir, [bool]$Uninstall) {
         Warn 'and stays disabled if it does not match (it will say so in VozAlien.log).'
     }
 
-    $tmp = Join-Path $env:TEMP ('vozalien-' + [guid]::NewGuid().ToString('N'))
+    $tmp = Join-Path ([IO.Path]::GetTempPath()) ('vozalien-' + [guid]::NewGuid().ToString('N'))
     New-Item -ItemType Directory -Path $tmp | Out-Null
     try {
         Say 'Downloading the latest release'
@@ -123,7 +123,7 @@ function Install-VozAlien([string]$GameDir, [bool]$Uninstall) {
             Invoke-WebRequest -UseBasicParsing -Uri $UalUrl -OutFile $zip
             if ((Get-Sha $zip) -ne $UalZipSha) { Fail 'Ultimate ASI Loader archive checksum mismatch.' }
             Expand-Archive -LiteralPath $zip -DestinationPath (Join-Path $tmp 'ual') -Force
-            $dll = Join-Path $tmp 'ual\dinput8.dll'
+            $dll = Join-Path (Join-Path $tmp 'ual') 'dinput8.dll'
             if ((Get-Sha $dll) -ne $UalDllSha) { Fail 'Ultimate ASI Loader DLL checksum mismatch.' }
             Copy-Safe $dll (Join-Path $GameDir $loader)
         }
